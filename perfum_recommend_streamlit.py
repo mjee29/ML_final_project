@@ -5,7 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
 
 # 데이터 불러오기
-data = pd.read_csv('C:/Users/mjkim/ML_final_project/final_perfume_data.csv', encoding="latin1")
+data = pd.read_csv('final_perfume_data.csv', encoding="latin1")
 
 # 노트 별 대표 향 딕셔너리 예시 (실제 딕셔너리로 교체 필요)
 note_categories ={'CITRUS': ['bergamot', 'bigarade', 'bitter orange', 'blood orange', 'calamansi', 'candied lemon', 'chen pi',
