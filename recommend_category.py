@@ -344,7 +344,7 @@ def run_recommendation():
     - **Base**: 가장 **오래** 지속되며, 향의 잔향을 결정짓는 향입니다.
     
     향수를 선택할 때, 각 노트에서 원하는 향을 선택하여 조합해 보세요!
-    #### 향수 노트 설명
+    #### 향 설명
     """
     st.markdown(description, unsafe_allow_html=True)
 
