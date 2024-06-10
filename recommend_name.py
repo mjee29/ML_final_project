@@ -6,7 +6,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 # 데이터 로드 및 전처리
 def load_data():
-    data = pd.read_csv(r'C:\Users\mjkim\ML_final_project\최종데이터.csv', encoding="latin1")
+    data = pd.read_csv('최종데이터.csv', encoding="latin1")
     data_cleaned = data.drop(columns=['Unnamed: 0'])
     data_cleaned['Notes'] = data_cleaned['Notes'].apply(eval)
     data_cleaned['category'] = data_cleaned['category'].str.split(',')
