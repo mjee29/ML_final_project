@@ -328,7 +328,7 @@ def recommend_perfumes(user_vector, top_n=5):
     perfumes_with_similarity = []
     for _, row in data.iterrows():
         similarity = calculate_similarity(row["Vector"], user_vector)
-        perfumes_with_similarity.append({"Name": row["Name"], "Similarity": similarity})
+        perfumes_with_similarity.append({"Name": row["Name"], "similarity": similarity})
     # 유사도가 높은 순서대로 정렬
     recommended_perfumes = sorted(perfumes_with_similarity, key=lambda x: x["similarity"], reverse=True)
     return recommended_perfumes[:top_n]
