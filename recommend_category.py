@@ -294,13 +294,6 @@ def map_to_category(notes, note_categories):
                 categories.add(category)
     return ','.join(categories) if categories else 'Unknown'
 
-# Example note categories dictionary
-note_categories = {
-    'MUSK AMBER ANIMALIC': ['musk', 'amber', 'animalic'],
-    'SPICES': ['pepper', 'cinnamon', 'clove'],
-    # Add more categories and notes as needed
-}
-
 data['category'] = data['Processed_Notes'].apply(lambda x: map_to_category(x, note_categories))
 
 # 분석에 필요없는 컬럼 제거
@@ -372,7 +365,7 @@ def run_recommendation():
         user_vector_base = vectorize_category([base_category])
 
         # 가중치 설정
-        weights = {"top": 0.2, "middle": 0.3, "base": 0.5}
+        weights = {"top": 0.0, "middle": 0.2, "base": 0.4}
 
         # 사용자 벡터 계산
         user_vector = (weights["top"] * user_vector_top +
