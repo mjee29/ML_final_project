@@ -3,6 +3,8 @@ import numpy as np
 from gensim.models import Word2Vec
 from sklearn.metrics.pairwise import cosine_similarity
 import streamlit as st
+from PIL import Image
+import math
 
 # 데이터 불러오기
 data = pd.read_csv('final_perfume_data.csv', encoding="latin1")
@@ -326,31 +328,48 @@ def recommend_perfumes(user_vector, top_n=5):
     recommended_perfumes = sorted(perfumes_with_similarity, key=lambda x: x["similarity"], reverse=True)
     return recommended_perfumes[:top_n]
 
-# 추천 실행 함수
 def run_recommendation():
-    st.header("Recommend by Category")
-
+    
     categories = [
         'MUSK AMBER ANIMALIC', 'SPICES', 'CITRUS', 'FLOWERS', 'WHITE FLOWERS',
         'RESINS BALSAMS', 'WOODS MOSSES', 'GREENS HERBS FOUGERES', 'SWEETS GOURMAND',
         'FRUITS VEGETABLES NUTS', 'BEVERAGES', 'NATURAL SYNTHETIC', 'POPULAR', 'WEIRD'
     ]
 
-    # 줄바꿈을 추가하는 함수
-    def add_line_breaks(text):
-        return text.replace(',', ',<br>')
-
     # 설명 텍스트
-    description = ('top - 가장 빨리 날아가는 향, '
-                   'middle - 중간 지속 향, '
-                   'base - 가장 오래 지속되는 향 / '
-                   '해당 기준에 맞춰 원하는 향을 입력해주세요')
+    description = """
+    아래의 향수 노트는 향수의 각 단계에서 발현되는 특징을 나타냅니다:
+    - **Top**: 제일 **먼저** 발현되며, 가장 빨리 날아가는 향입니다.
+    - **Middle**: 중간 단계에서 지속되며, 향의 **중심**을 이루는 향입니다.
+    - **Base**: 가장 **오래** 지속되며, 향의 잔향을 결정짓는 향입니다.
+    
+    향수를 선택할 때, 각 노트에서 원하는 향을 선택하여 조합해 보세요!
+    #### 향수 노트 설명
+    """
+    st.markdown(description, unsafe_allow_html=True)
 
-    # 줄바꿈이 추가된 설명 텍스트
-    formatted_description = add_line_breaks(description)
+    scent_data = {
+        '카테고리': ['CITRUS', 'FRUITS VEGETABLES NUTS', 'FLOWERS','WHITE FLOWERS','GREENS HERBS FOUGERES','SPICES','SWEETS GOURMAND','WOODS MOSSES','RESINS BALSAMS','MUSK AMBER ANIMALIC','BEVERAGES','NATURAL SYNTHETIC POPULAR WEIRD'],
+        '이미지': ['citrus.jpg', 'fruits_veg.jpg', 'flowers.jpg','whiteflower.jpg','greenherb.jpg','spices.jpg','sweets.jpg','woods.jpg','resinsandbal.jpg','musk.jpg','beverage.jpg','natural.jpg'],
+        '설명': ['상쾌', '달달, 상쾌, 고소', ' 꽃향, 달달','꽃향, 연함','톡 쏨, 씁쓸','묵직, 향신료','달달','묵직, 씁쓸, 자연, 나무냄새','발사믹향, 나무향과 잘 어울림','짠만, 깊은향, 달콤한향','열대의향, 칵테일과 동일한향','원료의 향처럼 가루 냄새,흙냄새']
+    }
+    scent_df = pd.DataFrame(scent_data)
 
-    # Streamlit에 출력 (Markdown 형식)
-    st.markdown(formatted_description, unsafe_allow_html=True)
+    # 표에 이미지와 설명 추가
+    num_rows = 4
+    num_columns = 3
+
+    columns = st.columns(num_columns)
+
+    for i in range(num_rows):
+        for j in range(num_columns):
+            idx = i * num_columns  + j
+            if idx < len(scent_df):
+                with columns[j]:
+                    st.markdown(f"**{scent_df['카테고리'][idx]}**")
+                    st.image(scent_df['이미지'][idx], width=80)
+                    st.write(scent_df['설명'][idx])
+    st.header("Recommend by Category")
 
     top_category = st.selectbox("Select the top:", categories)
     middle_category = st.selectbox("Select the middle:", categories)
