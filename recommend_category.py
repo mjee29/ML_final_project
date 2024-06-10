@@ -334,10 +334,9 @@ def run_recommendation():
         'RESINS BALSAMS', 'WOODS MOSSES', 'GREENS HERBS FOUGERES', 'SWEETS GOURMAND',
         'FRUITS VEGETABLES NUTS', 'BEVERAGES', 'NATURAL SYNTHETIC', 'POPULAR', 'WEIRD'
     ]
-    st.write('top - 가장 빨리 날아가는 향\n'
-         'middle - 중간 지속 향\n'
-         'base - 가장 오래 지속되는 향\n'  
-        '해당 기준에 맞춰 원하는 향을 입력해주세요')
+    st.write('top - 가장 빨리 날아가는 향,\n'
+             'middle - 중간 지속 향,\n'
+             'base - 가장 오래 지속되는 향 / (해당 기준에 맞춰 원하는 향을 입력해주세요)')
     top_category = st.selectbox("Select the top:", categories)
     middle_category = st.selectbox("Select the middle:", categories)
     base_category = st.selectbox("Select the base:", categories)
