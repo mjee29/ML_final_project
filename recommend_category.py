@@ -334,9 +334,21 @@ def run_recommendation():
         'RESINS BALSAMS', 'WOODS MOSSES', 'GREENS HERBS FOUGERES', 'SWEETS GOURMAND',
         'FRUITS VEGETABLES NUTS', 'BEVERAGES', 'NATURAL SYNTHETIC', 'POPULAR', 'WEIRD'
     ]
-    st.write('top - 가장 빨리 날아가는 향,\n'
-             'middle - 중간 지속 향,\n'
-             'base - 가장 오래 지속되는 향 / (해당 기준에 맞춰 원하는 향을 입력해주세요)')
+    # 줄바꿈을 추가하는 함수
+    def add_line_breaks(text):
+      return text.replace(',', ',<br>')
+
+    # 설명 텍스트
+    description = ('top - 가장 빨리 날아가는 향, '
+                   'middle - 중간 지속 향, '
+                   'base - 가장 오래 지속되는 향 / '
+                   '해당 기준에 맞춰 원하는 향을 입력해주세요')
+
+    # 줄바꿈이 추가된 설명 텍스트
+    formatted_description = add_line_breaks(description)
+
+    # Streamlit에 출력 (Markdown 형식)
+    st.markdown(formatted_description, unsafe_allow_html=True)
     top_category = st.selectbox("Select the top:", categories)
     middle_category = st.selectbox("Select the middle:", categories)
     base_category = st.selectbox("Select the base:", categories)
