@@ -294,6 +294,13 @@ def map_to_category(notes, note_categories):
                 categories.add(category)
     return ','.join(categories) if categories else 'Unknown'
 
+# Example note categories dictionary
+note_categories = {
+    'MUSK AMBER ANIMALIC': ['musk', 'amber', 'animalic'],
+    'SPICES': ['pepper', 'cinnamon', 'clove'],
+    # Add more categories and notes as needed
+}
+
 data['category'] = data['Processed_Notes'].apply(lambda x: map_to_category(x, note_categories))
 
 # 분석에 필요없는 컬럼 제거
@@ -321,11 +328,12 @@ def recommend_perfumes(user_vector, top_n=5):
     perfumes_with_similarity = []
     for _, row in data.iterrows():
         similarity = calculate_similarity(row["Vector"], user_vector)
-        perfumes_with_similarity.append({"name": row["Name"], "similarity": similarity})
+        perfumes_with_similarity.append({"Name": row["Name"], "Similarity": similarity})
     # 유사도가 높은 순서대로 정렬
     recommended_perfumes = sorted(perfumes_with_similarity, key=lambda x: x["similarity"], reverse=True)
     return recommended_perfumes[:top_n]
 
+# 추천 실행 함수
 def run_recommendation():
     st.header("Recommend by Category")
 
@@ -334,9 +342,10 @@ def run_recommendation():
         'RESINS BALSAMS', 'WOODS MOSSES', 'GREENS HERBS FOUGERES', 'SWEETS GOURMAND',
         'FRUITS VEGETABLES NUTS', 'BEVERAGES', 'NATURAL SYNTHETIC', 'POPULAR', 'WEIRD'
     ]
+
     # 줄바꿈을 추가하는 함수
     def add_line_breaks(text):
-      return text.replace(',', ',<br>')
+        return text.replace(',', ',<br>')
 
     # 설명 텍스트
     description = ('top - 가장 빨리 날아가는 향, '
@@ -349,34 +358,36 @@ def run_recommendation():
 
     # Streamlit에 출력 (Markdown 형식)
     st.markdown(formatted_description, unsafe_allow_html=True)
+
     top_category = st.selectbox("Select the top:", categories)
     middle_category = st.selectbox("Select the middle:", categories)
     base_category = st.selectbox("Select the base:", categories)
-    
+
     if st.button("Recommend by Category"):
         user_input = [top_category, middle_category, base_category]
-        
+
         # 벡터 변환
         user_vector_top = vectorize_category([top_category])
         user_vector_middle = vectorize_category([middle_category])
         user_vector_base = vectorize_category([base_category])
-        
+
         # 가중치 설정
-        weights = {"top": 0.0, "middle": 0.2, "base": 0.4}
-        
+        weights = {"top": 0.2, "middle": 0.3, "base": 0.5}
+
         # 사용자 벡터 계산
         user_vector = (weights["top"] * user_vector_top +
                        weights["middle"] * user_vector_middle +
                        weights["base"] * user_vector_base)
-        
-        # 데이터 로드
-        data = data
-        
+
         # 향수 추천 함수
-        recommended_perfumes = recommend_perfumes(user_vector, data, top_n=5)
-        
+        recommended_perfumes = recommend_perfumes(user_vector, top_n=5)
+
         # DataFrame으로 추천 결과 변환
-        recommended_df = pd.DataFrame(recommended_perfumes, columns=["Name", "Similarity"])
-        
+        recommended_df = pd.DataFrame(recommended_perfumes)
+
         st.write("\nTop 5 recommended perfumes by category:")
         st.dataframe(recommended_df)
+
+# Streamlit 실행
+if __name__ == "__main__":
+    run_recommendation()
