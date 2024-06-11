@@ -351,7 +351,7 @@ def run_recommendation():
     scent_data = {
         '카테고리': ['CITRUS', 'FRUITS VEGETABLES NUTS', 'FLOWERS','WHITE FLOWERS','GREENS HERBS FOUGERES','SPICES','SWEETS GOURMAND','WOODS MOSSES','RESINS BALSAMS','MUSK AMBER ANIMALIC','BEVERAGES','NATURAL SYNTHETIC POPULAR WEIRD'],
         '이미지': ['citrus.jpg', 'fruits_veg.jpg', 'flowers.jpg','whiteflower.jpg','greenherb.jpg','spices.jpg','sweets.jpg','woods.jpg','resinsandbal.jpg','musk.jpg','beverage.jpg','natural.jpg'],
-        '설명': ['상쾌', '달달, 상쾌, 고소', ' 꽃향, 달달','꽃향, 연함','톡 쏨, 씁쓸','묵직, 향신료','달달','묵직, 씁쓸, 자연, 나무냄새','발사믹향, 나무향과 잘 어울림','짠만, 깊은향, 달콤한향','열대의향, 칵테일과 동일한향','원료의 향처럼 가루 냄새,흙냄새']
+        '설명': ['상쾌', '달달, 상쾌, 고소', ' 꽃향, 달달','꽃향, 연함','톡 쏨, 씁쓸','묵직, 향신료','달달','묵직, 씁쓸, 자연, 나무냄새','발사믹향, 나무향과 잘 어울림','짠맛, 깊은향, 달콤한향','열대의향, 칵테일과 동일한향','원료의 향처럼 가루 냄새,흙냄새']
     }
     scent_df = pd.DataFrame(scent_data)
 
